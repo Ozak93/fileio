@@ -100,6 +100,7 @@ export class FilesService {
       '/';
     let filePath = folderPath + file.originalname;
     let url =
+      this.configService.get('SERVER_FILE_URL') +
       '/' +
       user!.projectName +
       '/' +
