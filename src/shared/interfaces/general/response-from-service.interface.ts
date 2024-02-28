@@ -3,7 +3,14 @@ import { ResponseMessage } from 'shared/types/response-message.type';
 import { DynamicObjectI } from './dynamic-object.interface';
 
 export interface ResponseFromServiceI<
-  T = string | number | DynamicObjectI | DynamicObjectI[] | string[] | number[],
+  T =
+    | string
+    | number
+    | DynamicObjectI
+    | DynamicObjectI[]
+    | string[]
+    | number[]
+    | any,
 > {
   message: ResponseMessage;
   data: T;
@@ -18,9 +25,10 @@ export function isResponseFromService(responseFromService?: DynamicObjectI) {
     );
   }
   if (
-    typeof responseFromService.message !== 'string' &&
-    typeof responseFromService.message !== 'object'
+    typeof responseFromService.message != 'string' &&
+    typeof responseFromService.message != 'object'
   ) {
+   
     throw new HttpException(
       'Response message must be a string or an object',
       HttpStatus.INTERNAL_SERVER_ERROR,

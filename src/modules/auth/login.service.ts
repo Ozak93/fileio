@@ -23,7 +23,9 @@ export class LoginService {
     const { email } = logUserInDto;
 
     const user = await this.usersService.findUserByEmail(email);
-
+  
+    console.log(`user is ${JSON.stringify(user)}`)
+     
     if (!user)
       throw new HttpException(
         'User Credentials is incorrect',
@@ -38,7 +40,7 @@ export class LoginService {
 
     if (!isPasswordCorrect)
       throw new HttpException(
-        'User Credentials is incorrect',
+        'User Password is incorrect',
         HttpStatus.UNAUTHORIZED,
       );
 

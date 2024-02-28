@@ -4,5 +4,6 @@
   "room": "Room",
   "message": "Message",
   "email": "Email",
+  "file": "File",
   "notification": "Notification"
 }

@@ -1,25 +1,22 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CacheService } from 'core/lib/cache/cache.service';
- import { DynamicObjectI } from 'shared/interfaces/general/dynamic-object.interface';
+import { DynamicObjectI } from 'shared/interfaces/general/dynamic-object.interface';
 import { ResponseFromServiceI } from 'shared/interfaces/general/response-from-service.interface';
 import { checkNullability } from 'shared/util/nullability.util';
 import {
-   FindOneOptions,
+  FindOneOptions,
   FindOptionsSelect,
   ILike,
   IsNull,
   Not,
   Repository,
 } from 'typeorm';
-import {
-   selectUser,
-  selectUsers,
-} from './constants/select-user.constant';
-import { CreateUserDto } from './dto/create-user.dto';
+import { selectUser, selectUsers } from './constants/select-user.constant';
 import { FilterUsersDto } from './dto/filter-users.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-  import { User } from './entities/user.entity';
+import { User } from './entities/user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -28,8 +25,6 @@ export class UsersService {
 
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-
-     
   ) {}
 
   async createUserForAuth(createUserDto: CreateUserDto) {
@@ -70,11 +65,7 @@ export class UsersService {
 
   async findOne(userID: string): Promise<ResponseFromServiceI<User>> {
     const user = await this.usersRepository.findOne({
-      relations: {
-        posts: { postMedias: true },
-        followers: true,
-        followings: true,
-      },
+      relations: {},
       where: { id: userID },
       select: selectUser,
     });
@@ -136,7 +127,6 @@ export class UsersService {
       httpStatus: HttpStatus.OK,
     };
   }
- 
 
   findOneByID(userID: string) {
     return this.usersRepository.findOneBy({ id: userID });

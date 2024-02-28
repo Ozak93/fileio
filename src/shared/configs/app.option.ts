@@ -14,6 +14,8 @@ import { RedisClientOptions } from 'redis';
 import * as Joi from 'joi';
 import { ConfigService } from '@nestjs/config/dist';
 import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
+import { File } from 'modules/files/entities/file.entity';
+import { User } from 'modules/users/entities/user.entity';
 
 export const jwtOptions: JwtModuleAsyncOptions = {
   useFactory: async (configService: ConfigService) => ({
@@ -27,9 +29,15 @@ export const cacheManagerOptions: CacheModuleAsyncOptions<RedisClientOptions> =
   {
     useFactory: async (configService: ConfigService) => ({
       store: redisStore,
+      isGlobal: true,
+      pingInterval: 1000,
+      username: configService.get<string>('REDIS_USERNAME') || '',
+      password: configService.get<string>('REDIS_PASSWORD') || '',
+
       socket: {
         host: configService.get<string>('REDIS_HOST'),
         port: +configService.get<number>('REDIS_PORT')!,
+
         tls: false,
       },
     }),
@@ -54,7 +62,7 @@ export const i18nOptions: I18nOptions = {
 };
 
 export const configOptions: ConfigModuleOptions = {
-  envFilePath: `.${process.env.NODE_ENV ?? 'development'}.env`,
+  envFilePath: `environments/.${process.env.NODE_ENV ?? 'development'}.env`,
   isGlobal: true,
   cache: true,
   validationSchema: Joi.object({
@@ -72,7 +80,7 @@ export const configOptions: ConfigModuleOptions = {
     DB_HOST: Joi.string().min(9).required(),
     DB_PORT: Joi.number().required(),
     DB_USERNAME: Joi.string().min(3).max(100).required(),
-    DB_PASSWORD: Joi.string().min(3).max(100).required(),
+    DB_PASSWORD: Joi.string().min(2).max(100).required(),
     DB_NAME: Joi.string().min(3).max(100).required(),
   }),
 };
@@ -85,11 +93,13 @@ export const typeORMOptions: TypeOrmModuleAsyncOptions = {
     username: configService.get<string>('DB_USERNAME')!,
     password: configService.get<string>('DB_PASSWORD')!,
     database: configService.get<string>('DB_NAME')!,
-    entities: [],
+    entities: [File, User],
     synchronize: true,
     retryAttempts: 5,
     retryDelay: 10000,
     autoLoadEntities: true,
+    logging:true,
+    logger:'advanced-console',
   }),
   inject: [ConfigService],
 };

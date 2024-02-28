@@ -71,13 +71,14 @@ async function bootstrap() {
 
   app.useLogger(logger);
 
-  if (nodeEnv === 'prod') {
+  if (nodeEnv != 'prod') {
     const config = new DocumentBuilder()
-      .setTitle('NestJS Skeleton')
-      .setDescription(
-        'Starter code for lightweight to middle size projects (Backend Development: NestJS)',
-      )
-      .setVersion('1.0')
+      .setTitle('Fileio API')
+      // .setDescription(
+      //   'Starter code for lightweight to middle size projects (Backend Development: NestJS)',
+      // )
+      
+      .setVersion(`1.0 - ${nodeEnv}`)
       .addBearerAuth(
         {
           type: 'http',

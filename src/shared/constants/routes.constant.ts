@@ -6,6 +6,13 @@ export const ROUTES = {
     LOG_OUT: 'logout',
   },
 
+  FILES: {
+  CONTROLLER : 'files',
+  CREATE : '',
+  UPLOAD_ONE: 'upload',
+  UPLOAD_MANY: 'upload-many',
+  },
+
   USERS: {
     CONTROLLER: 'users',
     FIND_ALL: '',

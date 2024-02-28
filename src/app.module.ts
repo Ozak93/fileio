@@ -31,7 +31,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     CronJobModule,
     I18nModule.forRoot(i18nOptions),
     JwtModule.registerAsync(jwtOptions),
-    CacheModule.register('cache-manager-redis-yet'),
+    CacheModule.register('storage-cache'),
     TypeOrmModule.forRootAsync(typeORMOptions),
     ModulesModule,
   ],

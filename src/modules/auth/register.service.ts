@@ -1,13 +1,12 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+import {  HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from 'modules/users/dto/create-user.dto';
 import { User } from 'modules/users/entities/user.entity';
-import { UsersService } from 'modules/users/users.service';
 import { ResponseFromServiceI } from 'shared/interfaces/general/response-from-service.interface';
-
+import * as bcrypt from 'bcrypt';
+import { UsersService } from 'modules/users/users.service';
 @Injectable()
 export class RegisterService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private  usersService:UsersService) {}
   async registerUser(
     createUserDto: CreateUserDto,
   ): Promise<ResponseFromServiceI<User>> {

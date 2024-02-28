@@ -1,9 +1,8 @@
  import { Base } from 'shared/entities/base.entity';
-import { Gender } from 'shared/enums/gender.enum';
-import { Column, Entity,   } from 'typeorm';
+ import { Column, Entity,   } from 'typeorm';
 import { AccountStatus } from '../enums/account-status.enum';
-import { ProfileStatus } from '../enums/profile-status.enum';
-  
+import { ApiProperty } from '@nestjs/swagger';
+   
 @Entity()
 export class User extends Base {
   @Column({ type: 'varchar', length: 30, unique: true })
@@ -14,18 +13,16 @@ export class User extends Base {
 
   @Column({ type: 'varchar' })
   password!: string;
-
-  @Column({ type: 'enum', enum: Gender })
-  gender!: Gender;
-
-  @Column({ type: 'varchar', length: 29 })
-  birthday!: string;
-
+ 
+  @Column({ type: 'varchar' })
+  projectName!: string;
+  
   @Column({ type: 'enum', enum: AccountStatus, default: AccountStatus.ACTIVE })
+  @ApiProperty({ type: () => AccountStatus })
+
   accountStatus!: AccountStatus;
 
-  @Column({ type: 'enum', enum: ProfileStatus, default: ProfileStatus.PUBLIC })
-  profileStatus!: ProfileStatus;
+ 
 
   
 }

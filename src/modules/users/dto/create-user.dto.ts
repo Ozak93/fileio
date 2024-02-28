@@ -4,16 +4,14 @@ import {
   MaxLength,
   MinLength,
   IsNotEmpty,
-  IsEnum,
-  IsNumber,
-  IsISO8601,
+ 
+ 
 } from 'class-validator';
 import { IsContainsLowercase } from 'core/decorators/is-contains-lower-case.decorator';
-import { MatchTwoProperties } from 'core/decorators/match-two-properties.decorator.';
-import { i18nValidationMessage } from 'nestjs-i18n';
+import { MatchTwoProperties } from 'core/decorators/match-two-properties.decorator';
+ import { i18nValidationMessage } from 'nestjs-i18n';
 import { I18nTranslations } from 'resources/generated/i18n.generated';
-import { Gender } from 'shared/enums/gender.enum';
-
+ 
 export class CreateUserDto {
   @ApiProperty({
     description: "User's username",
@@ -120,30 +118,10 @@ export class CreateUserDto {
   @MatchTwoProperties('password')
   confirmPassword!: string;
 
-  @ApiProperty({
-    description: "User's password",
-    example: 'mut1aq.54321',
-    isArray: false,
-    maxLength: 30,
-    minLength: 8,
-    name: 'password',
-    required: true,
-    type: Number,
-    enum: Gender,
-  })
-  @IsEnum(Gender)
-  @IsNumber(
-    { allowInfinity: false, allowNaN: false },
-    { message: 'Gender must be a number' },
-  )
-  @IsNotEmpty({
-    message: i18nValidationMessage<I18nTranslations>('validation.isNotEmpty'),
-  })
-  gender!: Gender;
 
-  @IsISO8601()
-  @IsNotEmpty({
-    message: i18nValidationMessage<I18nTranslations>('validation.isNotEmpty'),
-  })
-  birthday!: string;
+  @IsString({message: i18nValidationMessage<I18nTranslations>('validation.isString')})
+  projectName!: string;
+
+ 
+ 
 }

@@ -31,7 +31,7 @@ export class DbDuplicateColumnFilter implements ExceptionFilter {
     const i18n = I18nContext.current<I18nTranslations>(host);
 
     try {
-      const { table, detail } = exception.driverError;
+      const { table, detail } = exception.driverError as any;
 
       const messageParts = (detail + '').split('(');
 
