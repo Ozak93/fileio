@@ -120,6 +120,7 @@ export class CreateUserDto {
 
 
   @IsString({message: i18nValidationMessage<I18nTranslations>('validation.isString')})
+  @ApiProperty({ type: String, required: true, maxLength: 30, minLength: 3})
   projectName!: string;
 
  
