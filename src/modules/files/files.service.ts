@@ -96,6 +96,8 @@ export class FilesService {
       '/' +
       this.configService.get('FILE_UPLOAD_PATH') +
       '/' +
+      user!.projectName +
+      '/' +
       body.entityId +
       '/';
     let filePath = folderPath + file.originalname;
