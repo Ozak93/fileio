@@ -93,7 +93,7 @@ export class FilesService {
   ) {
     let user = await this.usersService.findOneByID(userID);
     let folderPath =
-      './' +
+      '/' +
       this.configService.get('FILE_UPLOAD_PATH') +
       '/' +
       body.entityId +
