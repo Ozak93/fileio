@@ -1,5 +1,6 @@
 import { Base } from 'shared/entities/base.entity';
-import { Column, Entity } from 'typeorm';
+import { BeforeInsert, Column, Entity } from 'typeorm';
+import { uuid } from 'uuidv4';
 
 @Entity()
 export class File extends Base {
@@ -23,4 +24,6 @@ export class File extends Base {
 
   @Column({ type: 'json', nullable: true })
   metaData?: any;
+
+ 
 }

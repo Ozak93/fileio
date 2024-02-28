@@ -99,6 +99,7 @@ export const typeORMOptions: TypeOrmModuleAsyncOptions = {
     retryDelay: 10000,
     autoLoadEntities: true,
     logging:true,
+    uuidExtension: 'pgcrypto',
     logger:'advanced-console',
   }),
   inject: [ConfigService],

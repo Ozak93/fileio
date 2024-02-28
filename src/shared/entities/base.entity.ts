@@ -3,13 +3,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   VersionColumn,
-  PrimaryColumn,
-  BeforeInsert,
 } from 'typeorm';
-import { uuid } from 'uuidv4';
 
 export abstract class Base {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id?: string;
 
   @CreateDateColumn()
@@ -20,13 +17,4 @@ export abstract class Base {
 
   @VersionColumn()
   __v!: number;
-
-
-
-  @BeforeInsert()
-generateUuid() {
-  if (!this.id) {
-    this.id = uuid();
-  }
-}
 }

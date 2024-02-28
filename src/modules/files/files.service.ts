@@ -8,6 +8,7 @@ import { File } from './entities/file.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UsersService } from 'modules/users/users.service';
+import { uuid } from 'uuidv4';
 
 @Injectable()
 export class FilesService {
@@ -127,6 +128,7 @@ export class FilesService {
         createdAt: Date.now().toString(),
         updatedAt: Date.now().toString(),
         __v: 0,
+ 
       };
       var queryRes = await this.filesRepository.save(fileObj);
 
