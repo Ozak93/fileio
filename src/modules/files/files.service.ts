@@ -3,7 +3,7 @@ import { CreateFileDto } from './dto/create-file.dto';
 import { UpdateFileDto } from './dto/update-file.dto';
 import { UploadFileDto } from './dto/upload-file.dto';
 import { ConfigService } from '@nestjs/config';
-import { existsSync, mkdirSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, renameSync, writeFileSync } from 'fs';
 import { File } from './entities/file.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -22,14 +22,14 @@ export class FilesService {
     return 'This action adds a new file' + createFileDto;
   }
 
-  async findAll(relatedTo: string) {
-    var res = await this.filesRepository.find({ where: { relatedTo } });
+  async findAll(entityId: string) {
+    var res = await this.filesRepository.find({ where: { entityId } });
     if (res.length > 0) {
       var data: any[] = [];
       data = res.map((file: File) => {
         var obj: any = file;
         obj.url= this.configService.get('SERVER_FILE_URL') + file.url;
-        obj.valid = existsSync('./' + file.url);
+        obj.valid = existsSync( file.localPath);
         return obj;
       });
       return {
@@ -82,8 +82,45 @@ export class FilesService {
     return `This action updates a #${updateFileDto} file` + id;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} file`;
+ async remove(id: string)  {
+    let file: File | null =await  this.filesRepository.findOne({ where: {
+      id: id,
+
+    } });
+
+    if (file) {
+      if (existsSync (file.localPath)) {
+        var res = await this.filesRepository.delete({ id });
+         renameSync(file.localPath, file.localPath.replace(`/${file.projectName}/`, `/trash/`));
+        return {
+          data: res,
+          message: {
+            translationKey: 'shared.success.delete',
+            args: { entity: 'entities.file' },
+          },
+          httpStatus: HttpStatus.OK,
+        };
+      } else {
+        return {
+          data: {},
+          message: {
+            translationKey: 'shared.error.notFound',
+            args: { entity: 'entities.file' },
+          },
+          httpStatus: HttpStatus.NOT_FOUND,
+        };
+      
+      }
+    } else {
+      return {
+        data: {},
+        message: {
+          translationKey: 'shared.error.notFound',
+          args: { entity: 'entities.file' },
+        },
+        httpStatus: HttpStatus.NOT_FOUND,
+      };
+    }
   }
 
   async uploadSingleFile(

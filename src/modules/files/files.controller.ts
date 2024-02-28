@@ -32,8 +32,8 @@ export class FilesController {
     return this.filesService.findOne(id);
   }
 
-  @Get('many/:relatedTo')
-  findMany(@Param('relatedTo') id: string) {
+  @Get('many/:entityId')
+  findMany(@Param('entityId') id: string) {
     return this.filesService.findAll(id);
   }
 
@@ -44,7 +44,7 @@ export class FilesController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.filesService.remove(+id);
+    return this.filesService.remove(id);
   }
 
   @Post('upload')
