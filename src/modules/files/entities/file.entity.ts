@@ -1,6 +1,5 @@
 import { Base } from 'shared/entities/base.entity';
-import { BeforeInsert, Column, Entity } from 'typeorm';
-import { uuid } from 'uuidv4';
+import {  Column, Entity } from 'typeorm';
 
 @Entity()
 export class File extends Base {
