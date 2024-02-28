@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsNotEmpty,
@@ -12,11 +13,13 @@ export class LogUserInDto {
   @IsEmail()
   @IsString()
   @IsNotEmpty()
+  @ApiProperty({ type: String, minLength: 5, maxLength: 320})
   email!: string;
 
   @MaxLength(30)
   @MinLength(8)
   @IsString()
   @IsNotEmpty()
+  @ApiProperty({ type: String, minLength: 8, maxLength: 30 })
   password!: string;
 }
