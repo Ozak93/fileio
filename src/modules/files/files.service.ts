@@ -120,6 +120,7 @@ export class FilesService {
       writeFileSync(filePath, file.buffer, { flush: true });
 
       let fileObj: File = {
+        id: uuid(),
         fileName: file.originalname,
         extension: file.originalname.split('.').pop()!,
         projectName: user!.projectName,
