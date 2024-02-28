@@ -13,6 +13,10 @@ export class File extends Base {
   @Column({ type: 'varchar' })
   url!: string;
 
+
+  @Column({ type: 'varchar' })
+  localPath!: string;
+
   @Column({ type: 'varchar' })
   projectName!: string;
 

@@ -91,6 +91,7 @@ export class FilesService {
     userID: string,
     file: Express.Multer.File,
   ) {
+    let user = await this.usersService.findOneByID(userID);
     let folderPath =
       './' +
       this.configService.get('FILE_UPLOAD_PATH') +
@@ -100,7 +101,7 @@ export class FilesService {
     let filePath = folderPath + file.originalname;
     let url =
       '/' +
-      this.configService.get('FILE_UPLOAD_PATH') +
+      user!.projectName +
       '/' +
       body.entityId +
       '/' +
@@ -112,7 +113,7 @@ export class FilesService {
     let res = mkdirSync(folderPath, { recursive: true });
     console.log(`folder created? ${res}`);
 
-    let user = await this.usersService.findOneByID(userID);
+
 
     if (existsSync(filePath) === false) {
       writeFileSync(filePath, file.buffer, { flush: true });
@@ -124,6 +125,7 @@ export class FilesService {
         relatedTo: body.relatedTo,
         entityId: body.entityId,
         metaData: body.data,
+        localPath: filePath,
         url: url,
         createdAt: Date.now().toString(),
         updatedAt: Date.now().toString(),
