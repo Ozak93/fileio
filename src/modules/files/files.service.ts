@@ -90,7 +90,7 @@ export class FilesService {
 
     if (file) {
       if (existsSync (file.localPath)) {
-        var res = await this.filesRepository.delete({ id });
+        var res = await this.filesRepository.softDelete({ id });
          renameSync(file.localPath, file.localPath.replace(`/${file.projectName}/`, `/trash/`));
         return {
           data: res,
