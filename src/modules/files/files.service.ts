@@ -28,8 +28,8 @@ export class FilesService {
       var data: any[] = [];
       data = res.map((file: File) => {
         var obj: any = file;
-        obj.url= this.configService.get('SERVER_FILE_URL') + file.url;
-        obj.valid = existsSync( file.localPath);
+        
+        obj.fileExists = existsSync( file.localPath);
         return obj;
       });
       return {
