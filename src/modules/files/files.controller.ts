@@ -74,7 +74,7 @@ export class FilesController {
   }
 
   @Post('upload-many')
-  @UseInterceptors(FilesInterceptor('files', 10, { preservePath: true }))
+  @UseInterceptors(FilesInterceptor('files', 10, { preservePath: true, }))
   uploadFiles(
     @Body() body: UploadFileDto,
     @UserID() userID: string,
