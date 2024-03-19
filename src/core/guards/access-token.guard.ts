@@ -44,9 +44,7 @@ export class AccessTokenGuard implements CanActivate {
       if (bearer !== 'Bearer')
         throw new HttpException('Invalid Headers', HttpStatus.UNAUTHORIZED);
 
-      const decodedToken = this.jwtService.verify<DecodedTokenI>(accessToken, {
-        secret: this.configService.get<string>('USER_ACCESS_TOKEN_SECRET')!,
-      });
+      const decodedToken = this.jwtService.decode<DecodedTokenI>(accessToken);
 
       const { sub } = decodedToken;
 
