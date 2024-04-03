@@ -182,7 +182,7 @@ export class FilesService {
     
         var data = JSON.parse(JSON.stringify(fetchFile));
       
-        data.url= this.configService.get('SERVER_FILE_URL') + data.url;
+       
 
       return {
         data: data,
