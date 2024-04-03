@@ -177,8 +177,15 @@ export class FilesService {
 
       console.log(`file written`);
 
+      var fetchFile = await this.filesRepository.findOneBy({  id: queryRes.id});
+       
+    
+        var data = JSON.parse(JSON.stringify(fetchFile));
+      
+        data.url= this.configService.get('SERVER_FILE_URL') + data.url;
+
       return {
-        data: { id: queryRes.id, url: queryRes.url },
+        data: data,
         message: {
           translationKey: 'shared.success.create',
           args: { entity: 'entities.file' },
