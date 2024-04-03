@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   VersionColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 
 export abstract class Base {
@@ -15,6 +16,8 @@ export abstract class Base {
   @UpdateDateColumn()
   updatedAt!: string;
 
+  @DeleteDateColumn({nullable:true})
+  deletedAt?: string;
   @VersionColumn()
   __v!: number;
 }

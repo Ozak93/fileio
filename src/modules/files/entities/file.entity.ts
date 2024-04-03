@@ -28,5 +28,5 @@ export class File extends Base {
   @Column({ type: 'json', nullable: true })
   metaData?: any;
 
- 
+  
 }
